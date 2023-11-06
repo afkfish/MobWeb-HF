@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nav_graph"
+        app:startDestination="@id/mainFragment">
+
+    <fragment
+            android:id="@+id/filmListFragment"
+            android:name="hu.bme.aut.android.cinemadb.feature.film.FilmListFragment"
+            android:label="fragment_film_list"
+            tools:layout="@layout/fragment_film_list" >
+        <action
+                android:id="@+id/action_filmFragment_to_filmDetailFragment"
+                app:destination="@id/filmDetailFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/mapsFragment"
+            android:name="hu.bme.aut.android.cinemadb.MapsFragment"
+            android:label="fragment_maps"
+            tools:layout="@layout/fragment_maps" />
+    <fragment
+            android:id="@+id/cinemaListFragment"
+            android:name="hu.bme.aut.android.cinemadb.feature.cinema.CinemaListFragment"
+            android:label="fragment_cinema_list"
+            tools:layout="@layout/fragment_cinema_list" >
+        <action
+                android:id="@+id/action_cinemaListFragment_to_cinemaDetailFragment"
+                app:destination="@id/cinemaDetailFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/cinemaDetailFragment"
+            android:name="hu.bme.aut.android.cinemadb.feature.cinema.CinemaDetailFragment"
+            android:label="fragment_cinema_detail"
+            tools:layout="@layout/fragment_cinema_detail" />
+    <fragment
+            android:id="@+id/filmDetailFragment"
+            android:name="hu.bme.aut.android.cinemadb.feature.film.FilmDetailFragment"
+            android:label="fragment_film_detail"
+            tools:layout="@layout/fragment_film_detail" />
+    <fragment
+            android:id="@+id/mainFragment"
+            android:name="hu.bme.aut.android.cinemadb.MainFragment"
+            android:label="fragment_main"
+            tools:layout="@layout/fragment_main" >
+        <action
+                android:id="@+id/action_mainFragment_to_filmListFragment"
+                app:destination="@id/filmListFragment" />
+        <action
+                android:id="@+id/action_mainFragment_to_cinemaListFragment"
+                app:destination="@id/cinemaListFragment" />
+        <action
+                android:id="@+id/action_mainFragment_to_mapsFragment"
+                app:destination="@id/mapsFragment" />
+    </fragment>
+</navigation>
