@@ -5,30 +5,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import hu.bme.aut.android.cinemadb.R
 import hu.bme.aut.android.cinemadb.databinding.FragmentFilmListBinding
 import hu.bme.aut.android.cinemadb.model.film.FilmResponse
+import hu.bme.aut.android.cinemadb.model.film.FilmViewModel
 
 /**
  * A fragment representing a list of Items.
  */
 class FilmListFragment : Fragment(), MyFilmListRecyclerViewAdapter.OnFilmSelectedListener {
     private lateinit var binding: FragmentFilmListBinding
-
+    private lateinit var adapter: MyFilmListRecyclerViewAdapter
+    private lateinit var filmViewModel: FilmViewModel
     private var filmResponse: FilmResponse? = null
-    private var filmDataHolder: FilmDataHolder? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        filmDataHolder = if (activity is FilmDataHolder) {
-            activity as FilmDataHolder?
-        } else {
-            throw RuntimeException(
-                "Activity must implement FilmDataHolder interface!"
-            )
+        adapter = MyFilmListRecyclerViewAdapter(this)
+
+        filmViewModel = viewModels<FilmViewModel>().value
+        filmViewModel.filmResponse.observe(this) {
+            filmResponse = it.first
+            displayFilmResponse()
         }
     }
 
@@ -39,16 +41,8 @@ class FilmListFragment : Fragment(), MyFilmListRecyclerViewAdapter.OnFilmSelecte
     ): View {
         binding = FragmentFilmListBinding.inflate(inflater, container, false)
         binding.list.layoutManager = LinearLayoutManager(context)
+        binding.list.adapter = adapter
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        if (filmDataHolder?.getFilmResponse() != null) {
-            filmResponse = filmDataHolder?.getFilmResponse()
-            displayFilmResponse()
-        }
     }
 
     override fun onFilmSelected() {
@@ -56,6 +50,6 @@ class FilmListFragment : Fragment(), MyFilmListRecyclerViewAdapter.OnFilmSelecte
     }
 
     private fun displayFilmResponse() {
-        binding.list.adapter = MyFilmListRecyclerViewAdapter(filmResponse!!, this)
+        adapter.updateFilms(filmResponse!!.body.films)
     }
 }
