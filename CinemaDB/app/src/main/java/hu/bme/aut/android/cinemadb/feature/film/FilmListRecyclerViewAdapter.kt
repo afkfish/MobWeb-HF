@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import hu.bme.aut.android.cinemadb.databinding.FragmentFilmBinding
 import hu.bme.aut.android.cinemadb.model.film.Film
 
-class MyFilmListRecyclerViewAdapter(private val listener: OnFilmSelectedListener) :
-    RecyclerView.Adapter<MyFilmListRecyclerViewAdapter.ViewHolder>() {
+class FilmListRecyclerViewAdapter(private val listener: OnFilmSelectedListener) :
+    RecyclerView.Adapter<FilmListRecyclerViewAdapter.ViewHolder>() {
 
     private val values: MutableList<Film> = mutableListOf()
 
     interface OnFilmSelectedListener {
-        fun onFilmSelected()
+        fun onFilmSelected(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
@@ -39,7 +39,7 @@ class MyFilmListRecyclerViewAdapter(private val listener: OnFilmSelectedListener
         val idView: TextView = binding.itemNumber
 
         init {
-            binding.root.setOnClickListener { listener.onFilmSelected() }
+            binding.root.setOnClickListener { listener.onFilmSelected(bindingAdapterPosition) }
         }
     }
 }

@@ -16,16 +16,16 @@ import hu.bme.aut.android.cinemadb.model.film.FilmViewModel
 /**
  * A fragment representing a list of Items.
  */
-class FilmListFragment : Fragment(), MyFilmListRecyclerViewAdapter.OnFilmSelectedListener {
+class FilmListFragment : Fragment(), FilmListRecyclerViewAdapter.OnFilmSelectedListener {
     private lateinit var binding: FragmentFilmListBinding
-    private lateinit var adapter: MyFilmListRecyclerViewAdapter
+    private lateinit var adapter: FilmListRecyclerViewAdapter
     private lateinit var filmViewModel: FilmViewModel
     private var filmResponse: FilmResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = MyFilmListRecyclerViewAdapter(this)
+        adapter = FilmListRecyclerViewAdapter(this)
 
         filmViewModel = viewModels<FilmViewModel>().value
         filmViewModel.filmResponse.observe(this) {
@@ -45,8 +45,9 @@ class FilmListFragment : Fragment(), MyFilmListRecyclerViewAdapter.OnFilmSelecte
         return binding.root
     }
 
-    override fun onFilmSelected() {
-        findNavController().navigate(R.id.action_filmFragment_to_filmDetailFragment)
+    override fun onFilmSelected(position: Int) {
+        findNavController().navigate(R.id.action_filmListFragment_to_filmDetailFragment)
+        findNavController().currentBackStackEntry?.savedStateHandle?.set(FilmDetailFragment.film, position)
     }
 
     private fun displayFilmResponse() {

@@ -5,35 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import hu.bme.aut.android.cinemadb.databinding.FragmentMapsBinding
-import hu.bme.aut.android.cinemadb.feature.cinema.CinemaDataHolder
-import hu.bme.aut.android.cinemadb.feature.cinema.CinemaListFragment
+import hu.bme.aut.android.cinemadb.model.cinema.CinemaResponse
+import hu.bme.aut.android.cinemadb.model.cinema.CinemaViewModel
 
 class MapsFragment : Fragment() {
     private lateinit var binding: FragmentMapsBinding
 
     private lateinit var cinemaPositions: List<CinemaPosition>
-    private var cinemaDataHolder: CinemaDataHolder? = null
+    private lateinit var cinemaViewModel: CinemaViewModel
+    private var cinemaResponse: CinemaResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        cinemaDataHolder = if (activity is CinemaDataHolder) {
-            activity as CinemaDataHolder?
-        } else {
-            throw RuntimeException(
-                "Activity must implement CinemaDataHolder interface!"
-            )
+        cinemaViewModel = viewModels<CinemaViewModel>().value
+        cinemaViewModel.cinemaResponse.observe(this) {
+            cinemaResponse = it.first
+            getCinemaPositions()
         }
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
-        getCinemaPositions()
         cinemaPositions.forEach {
             googleMap.addMarker(MarkerOptions().position(it.position).title(it.name))
         }
@@ -60,7 +59,7 @@ class MapsFragment : Fragment() {
     }
 
     private fun getCinemaPositions() {
-        cinemaPositions = cinemaDataHolder?.getCinemaResponse()?.body?.cinemas?.map {
+        cinemaPositions = cinemaResponse?.body?.cinemas?.map {
             CinemaPosition(
                 it.displayName,
                 LatLng(it.latitude, it.longitude)

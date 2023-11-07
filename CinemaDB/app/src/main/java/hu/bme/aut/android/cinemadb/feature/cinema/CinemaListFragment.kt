@@ -16,16 +16,16 @@ import hu.bme.aut.android.cinemadb.model.cinema.CinemaViewModel
 /**
  * A fragment representing a list of Items.
  */
-class CinemaListFragment : Fragment(), MyCinemaListRecyclerViewAdapter.OnCinemaSelectedListener {
+class CinemaListFragment : Fragment(), CinemaListRecyclerViewAdapter.OnCinemaSelectedListener {
     private lateinit var binding: FragmentCinemaListBinding
-    private lateinit var adapter: MyCinemaListRecyclerViewAdapter
+    private lateinit var adapter: CinemaListRecyclerViewAdapter
     private lateinit var cinemaDataHolder: CinemaViewModel
     private var cinemaResponse: CinemaResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = MyCinemaListRecyclerViewAdapter(this)
+        adapter = CinemaListRecyclerViewAdapter(this)
 
         cinemaDataHolder = viewModels<CinemaViewModel>().value
         cinemaDataHolder.cinemaResponse.observe(this) {
@@ -45,8 +45,9 @@ class CinemaListFragment : Fragment(), MyCinemaListRecyclerViewAdapter.OnCinemaS
         return binding.root
     }
 
-    override fun onCinemaSelected() {
+    override fun onCinemaSelected(position: Int) {
         findNavController().navigate(R.id.action_cinemaListFragment_to_cinemaDetailFragment)
+        findNavController().currentBackStackEntry?.savedStateHandle?.set(CinemaDetailFragment.cinema, position)
     }
 
     private fun displayCinemaResponse() {
