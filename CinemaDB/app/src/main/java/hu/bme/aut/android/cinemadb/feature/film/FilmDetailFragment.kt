@@ -1,5 +1,7 @@
 package hu.bme.aut.android.cinemadb.feature.film
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import hu.bme.aut.android.cinemadb.databinding.FragmentFilmDetailBinding
-import hu.bme.aut.android.cinemadb.model.film.Film
+import hu.bme.aut.android.cinemadb.model.film.FilmResponse.Body.Film
 import hu.bme.aut.android.cinemadb.model.film.FilmViewModel
 
 
@@ -44,7 +46,11 @@ class FilmDetailFragment : Fragment() {
     private fun loadCinema() {
         binding.filmTitle.text = film.name
         binding.filmReleaseDate.text = film.releaseYear
-        binding.filmFormat.text = film.attributeIds.joinToString(", ")
+        binding.filmAttributes.text = film.attributeIds.joinToString("\n")
+        binding.filmLinkButton.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(film.link))
+            startActivity(browserIntent)
+        }
 
         Glide.with(this)
             .load(film.posterLink)

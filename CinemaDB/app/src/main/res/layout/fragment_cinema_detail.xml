@@ -7,49 +7,73 @@
 
         <ImageView
                 android:id="@+id/cinema_image"
-                android:layout_width="225dp"
-                android:layout_height="300dp"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
-                android:outlineAmbientShadowColor="@color/black"
-                android:background="@color/cardview_dark_background"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="25dp"
                 android:contentDescription="@string/cinema_image" />
+
+        <TextView
+                android:id="@+id/cinema_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="Cinema 1" />
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
-                android:weightSum="4">
+                android:weightSum="6" >
 
-                <TextView
-                        android:id="@+id/cinema_info_1"
+                <ImageButton
+                        android:id="@+id/cinema_address_button"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:textSize="15sp"
-                        tools:text="1" />
+                        android:src="@drawable/baseline_map_24" />
 
-                <TextView
-                        android:id="@+id/cinema_name"
+                <Space
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                <Button
+                        android:id="@+id/cinema_link_button"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="2"
-                        android:gravity="center"
-                        android:textSize="30sp"
-                        android:textStyle="bold"
-                        tools:text="Cinema 1" />
+                        android:textSize="15sp"
+                        android:text="@string/visit_website" />
 
-                <TextView
-                        android:id="@+id/cinema_info_2"
+                <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5" />
+
+                <EditText
+                        android:id="@+id/cinema_date_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        tools:text="2" />
+                        android:layout_weight="1.5"
+                        android:textAlignment="center" />
 
         </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+                <LinearLayout
+                    android:id="@+id/cinema_events_linear_layout"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+        </ScrollView>
 </LinearLayout>

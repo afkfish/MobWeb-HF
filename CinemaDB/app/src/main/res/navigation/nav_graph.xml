@@ -34,5 +34,16 @@
     <fragment
         android:id="@+id/cinemaDetailFragment"
         android:name="hu.bme.aut.android.cinemadb.feature.cinema.CinemaDetailFragment"
-        android:label="CinemaDetailFragment" />
+        android:label="CinemaDetailFragment" >
+        <action
+            android:id="@+id/action_cinemaDetailFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+        <action
+            android:id="@+id/action_cinemaDetailFragment_to_datePickerDialogFragment"
+            app:destination="@id/datePickerDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/datePickerDialogFragment"
+        android:name="hu.bme.aut.android.cinemadb.DatePickerDialogFragment"
+        android:label="DatePickerDialogFragment" />
 </navigation>

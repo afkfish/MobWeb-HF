@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hu.bme.aut.android.cinemadb.databinding.FragmentFilmBinding
-import hu.bme.aut.android.cinemadb.model.film.Film
+import hu.bme.aut.android.cinemadb.model.film.FilmResponse.Body.Film
 
 class FilmListRecyclerViewAdapter(private val listener: OnFilmSelectedListener) :
     RecyclerView.Adapter<FilmListRecyclerViewAdapter.ViewHolder>() {
@@ -22,8 +22,7 @@ class FilmListRecyclerViewAdapter(private val listener: OnFilmSelectedListener) 
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.idView.text = item.name
+        holder.bind(values[position])
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -36,10 +35,14 @@ class FilmListRecyclerViewAdapter(private val listener: OnFilmSelectedListener) 
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: FragmentFilmBinding) : RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
+        private val idView: TextView = binding.itemNumber
 
         init {
             binding.root.setOnClickListener { listener.onFilmSelected(bindingAdapterPosition) }
+        }
+
+        fun bind(film: Film) {
+            idView.text = film.name
         }
     }
 }

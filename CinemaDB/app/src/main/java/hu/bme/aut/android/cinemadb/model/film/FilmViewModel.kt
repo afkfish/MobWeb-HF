@@ -7,13 +7,17 @@ import hu.bme.aut.android.cinemadb.network.NetworkManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
+import hu.bme.aut.android.cinemadb.model.film.FilmResponse.Body.Film
 
 class FilmViewModel : ViewModel() {
     val filmResponse: MutableLiveData<Pair<FilmResponse?, Error?>> = MutableLiveData()
+    val filteredList: MutableLiveData<List<Film>> = MutableLiveData()
 
     init {
         loadFilmResponse {
             filmResponse.value = it
+            filteredList.value = it.first?.body?.films as MutableList<Film>?
         }
     }
 
@@ -42,5 +46,16 @@ class FilmViewModel : ViewModel() {
                 completion(Pair(null, Error(throwable.message)))
             }
         })
+    }
+
+    fun filter(query: String): Boolean {
+        val tempList = mutableListOf<Film>()
+        for (film in filmResponse.value?.first?.body?.films!!) {
+            if (film.name.lowercase(Locale.ROOT).contains(query.lowercase(Locale.ROOT))) {
+                tempList.add(film)
+            }
+        }
+        filteredList.postValue(tempList)
+        return tempList.isNotEmpty()
     }
 }

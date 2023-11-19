@@ -2,10 +2,12 @@ package hu.bme.aut.android.cinemadb.network
 
 import hu.bme.aut.android.cinemadb.model.cinema.CinemaResponse
 import hu.bme.aut.android.cinemadb.model.film.FilmResponse
+import hu.bme.aut.android.cinemadb.model.filmEvent.FilmEventResponse
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.Instant
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -26,16 +28,21 @@ object NetworkManager {
     }
 
     fun getCinemas(): Call<CinemaResponse?>? {
-        updateDate()
+        updateDate(true)
         return cinemaCityApi.getCinemas(date)
     }
 
     fun getFilms(): Call<FilmResponse?>? {
-        updateDate()
+        updateDate(true)
         return cinemaCityApi.getFilms(date)
     }
 
-    private fun updateDate() {
-        date = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now().plusYears(1))
+    fun getFilmEventsByCinema(cinemaId: String, date: LocalDate): Call<FilmEventResponse?>? {
+        val dateString = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(date)
+        return cinemaCityApi.getFilmEvents(cinemaId, dateString)
+    }
+
+    private fun updateDate(nextYear: Boolean = false) {
+        date = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now().plusYears(if (nextYear) 1 else 0))
     }
 }

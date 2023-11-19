@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hu.bme.aut.android.cinemadb.databinding.FragmentCinemaBinding
-import hu.bme.aut.android.cinemadb.model.cinema.Cinema
+import hu.bme.aut.android.cinemadb.model.cinema.CinemaResponse.Body.Cinema
 
 class CinemaListRecyclerViewAdapter(private val listener: OnCinemaSelectedListener) :
     RecyclerView.Adapter<CinemaListRecyclerViewAdapter.ViewHolder>() {
@@ -22,8 +22,7 @@ class CinemaListRecyclerViewAdapter(private val listener: OnCinemaSelectedListen
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.idView.text = item.displayName
+        holder.bind(values[position])
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -40,6 +39,10 @@ class CinemaListRecyclerViewAdapter(private val listener: OnCinemaSelectedListen
 
         init {
             binding.root.setOnClickListener { listener.onCinemaSelected(bindingAdapterPosition) }
+        }
+
+        fun bind(cinema: Cinema) {
+            idView.text = cinema.displayName
         }
     }
 }

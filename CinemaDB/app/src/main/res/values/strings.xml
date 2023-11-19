@@ -8,4 +8,10 @@
     <string name="cinemas">Cinemas</string>
     <string name="cinema_image">Cinema image</string>
     <string name="film_image">Film image</string>
+    <string name="search">Search</string>
+    <string name="visit_website">Visit website</string>
+    <string name="no_events">There are no events for today</string>
+    <string name="release_year">Release year:</string>
+    <string name="attributes">Attributes</string>
+    <string name="film_page">Film page</string>
 </resources>
