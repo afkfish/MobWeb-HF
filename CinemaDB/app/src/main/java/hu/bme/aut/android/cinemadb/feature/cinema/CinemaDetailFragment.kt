@@ -55,7 +55,7 @@ class CinemaDetailFragment : Fragment() {
         cinemaViewModel = viewModels<CinemaViewModel>().value
         filmEventViewModel = viewModels<FilmEventViewModel>().value
 
-        binding.cinemaDateText.setText(DateTimeFormatter.ofPattern("MM-dd").format(chosenDate))
+//        binding.cinemaDateText.setText(DateTimeFormatter.ofPattern("MM-dd").format(chosenDate))
         binding.cinemaDateText.setOnClickListener {
             findNavController().navigate(R.id.action_cinemaDetailFragment_to_datePickerDialogFragment)
         }
