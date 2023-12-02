@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
+                android:layout_marginHorizontal="10dp"
                 android:weightSum="6" >
 
                 <ImageButton
@@ -58,7 +59,7 @@
                         android:layout_weight="0.5" />
 
                 <Button
-                        android:id="@+id/cinema_date_text"
+                        android:id="@+id/cinema_date_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
@@ -68,13 +69,15 @@
         </LinearLayout>
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp">
+
                 <LinearLayout
-                    android:id="@+id/cinema_events_linear_layout"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                        android:id="@+id/cinema_events_linear_layout"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
         </ScrollView>
 </LinearLayout>

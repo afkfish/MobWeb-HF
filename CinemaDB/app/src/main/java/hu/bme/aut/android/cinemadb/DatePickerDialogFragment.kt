@@ -14,12 +14,13 @@ class DatePickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetLis
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val date = LocalDate.now()
         val datePickerFragment = DatePickerDialog(requireContext(), this, date.year, date.monthValue, date.dayOfMonth)
+        datePickerFragment.datePicker.maxDate = System.currentTimeMillis() + 1000L * 60L * 60L * 24L * 7L
         datePickerFragment.datePicker.minDate = System.currentTimeMillis()
         return datePickerFragment
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        val result = DatePickerResult(year, month, dayOfMonth)
+        val result = DatePickerResult(year, month+1, dayOfMonth)
         findNavController().previousBackStackEntry?.savedStateHandle?.set("date", result)
     }
 

@@ -9,7 +9,6 @@ import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -30,7 +29,6 @@ import hu.bme.aut.android.cinemadb.model.filmEvent.FilmEventViewModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Calendar
 
 
 class CinemaDetailFragment : Fragment() {
@@ -42,7 +40,6 @@ class CinemaDetailFragment : Fragment() {
     private lateinit var filmEventViewModel: FilmEventViewModel
 
     private var chosenDate = LocalDate.now()
-    private lateinit var datePickerDialog: DatePickerDialogFragment
 
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -55,8 +52,8 @@ class CinemaDetailFragment : Fragment() {
         cinemaViewModel = viewModels<CinemaViewModel>().value
         filmEventViewModel = viewModels<FilmEventViewModel>().value
 
-//        binding.cinemaDateText.setText(DateTimeFormatter.ofPattern("MM-dd").format(chosenDate))
-        binding.cinemaDateText.setOnClickListener {
+        binding.cinemaDateButton.text = DateTimeFormatter.ofPattern("MM-dd").format(chosenDate)
+        binding.cinemaDateButton.setOnClickListener {
             findNavController().navigate(R.id.action_cinemaDetailFragment_to_datePickerDialogFragment)
         }
 
@@ -90,7 +87,7 @@ class CinemaDetailFragment : Fragment() {
 
     private fun onDateSet(year: Int, month: Int, dayOfMonth: Int) {
         chosenDate = LocalDate.of(year, month, dayOfMonth)
-        binding.cinemaDateText.setText(DateTimeFormatter.ofPattern("MM-dd").format(chosenDate))
+        binding.cinemaDateButton.text = DateTimeFormatter.ofPattern("MM-dd").format(chosenDate)
         filmEventViewModel.loadResponseForCinema(cinema.id, chosenDate)
     }
 
